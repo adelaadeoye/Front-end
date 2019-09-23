@@ -1,6 +1,7 @@
 import React from 'react'
 import {withFormik, Field, Form} from 'formik'
 import * as Yup from 'yup'
+import { reset } from 'ansi-colors'
 
 const LogInForm = ({touched, errors}) =>{
     return(
@@ -12,6 +13,7 @@ const LogInForm = ({touched, errors}) =>{
              
             {touched.password && errors.password && <p className="error_message">{errors.password}</p>}
             <Field type="password" name="password" placeholder="password"/>
+            <button type="submit">LogIn</button>
         </Form>
     )
 }
@@ -23,15 +25,16 @@ const LogIn = withFormik({
         password: password || ""}
     }, 
     validationSchema:Yup.object().shape({
-        email: Yup.string()
+        username: Yup.string()
         .required('please enter your username'), 
 
         password: Yup.string()
         .required('please enter your password')
 
     }), 
-    handleSubmit(values){
+    handleSubmit(values, {resetForm}){
         console.log(values)
+        resetForm()
     }
 })(LogInForm)
 

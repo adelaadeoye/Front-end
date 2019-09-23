@@ -11,32 +11,32 @@ const SignUpForm = ({values, errors, touched }) => {
     return(
         <Form>
             
-            {touched.firstname && errors.firstname && <p>{errors.firstname}</p>}
+            {touched.firstname && errors.firstname && <p className="error_message">{errors.firstname}</p>}
             <Field type="text" name="firstname" placeholder="First Name"/>
 
-            {touched.lastname && errors.lastname && <p>{errors.lastname}</p>}
+            {touched.lastname && errors.lastname && <p className="error_message">{errors.lastname}</p>}
             <Field type="text" name="lastname" placeholder="Last Name" />
 
-            {touched.email && errors.email && <p>{errors.email}</p>}
+            {touched.email && errors.email && <p className="error_message">{errors.email}</p>}
             <Field type="text" name="email" placeholder="Your email address"/>
 
-            {touched.username && errors.username && <p>{errors.username}</p>}
+            {touched.username && errors.username && <p className="error_message">{errors.username}</p>}
             <Field type="text" name="username" placeholder="Username"/>
 
-            {touched.password && errors.password && <p>{errors.password}</p>}
+            {touched.password && errors.password && <p className="error_message">{errors.password}</p>}
             <Field type="password" name="password" placeholder="Password"/>
 
-            {touched.age && errors.age && <p>{errors.age}</p>}
+            {touched.age && errors.age && <p className="error_message">{errors.age}</p>}
             <Field type="number" name="age" placeholder="Age" />
 
-            {touched.gender && errors.gender && <p>{errors.gender}</p>}
+            {touched.gender && errors.gender && <p className="error_message">{errors.gender}</p>}
             <Field component="select" name="gender" >
                 <option value='Male'>Male</option>
                 <option value='Female'>Female</option>
             </Field>
 
-            {touched.height && errors.height && <p>{errors.height}</p>}
-            {touched.inches && errors.inches && <p>{errors.inches}</p>}
+            {touched.height && errors.height && <p className="error_message">{errors.height}</p>}
+            {touched.inches && errors.inches && <p className="error_message">{errors.inches}</p>}
             <div>
                 <label> Feet:
                     <Field component="select" name="feet">
@@ -66,10 +66,11 @@ const SignUpForm = ({values, errors, touched }) => {
 
                 </label>
             </div>
-
+            
+            {touched.weight && errors.weight && <p className="error_message">{errors.weight}</p>}
             <Field type='number' name="weight" placeholder="weight"/> <span>(lbs)</span>
 
-            {touched.activity && errors.activity && <p>{errors.activity}</p>}
+            {touched.activity && errors.activity && <p className="error_message">{errors.activity}</p>}
             <Field component="select" name='activity'>
                 <option value="0">0 days</option>
                 <option value="2">1-2 days</option>
@@ -78,7 +79,7 @@ const SignUpForm = ({values, errors, touched }) => {
                 <option value="7">7 days</option>
             </Field>
             
-            {touched.goals && errors.goals && <p>{errors.goals}</p>}
+            {touched.goals && errors.goals && <p className="error_message">{errors.goals}</p>}
             <Field component="select" name="goals">
                 <option value="-20">aggressive weight loss (20% deficit)</option>
                 <option value="-15">moderate weight loss (15% deficit)</option>
