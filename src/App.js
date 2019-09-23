@@ -1,13 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Route} from 'react-router-dom'
 import './App.css';
 import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
 function App() {
   return (
     <div className="App">
-     <SignUp />
-     <LogIn />
+     
+
+     <Route exact path="/signup" render={props => <SignUp {...props}/>}/>
+     <Route exact path="/login" render={props => <LogIn {...props}/>}/>
     </div>
   );
 }
