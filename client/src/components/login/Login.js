@@ -1,6 +1,12 @@
 import React from "react";
 import { withFormik, Form, Field } from "formik";
-import { makeStyles, Button, Container, CssBaseline } from "@material-ui/core";
+import {
+  Typography,
+  makeStyles,
+  Button,
+  Container,
+  CssBaseline
+} from "@material-ui/core";
 import * as yup from "yup";
 
 const useStyles = makeStyles(theme => ({
@@ -10,6 +16,10 @@ const useStyles = makeStyles(theme => ({
   paper: {
     height: 140,
     width: 100
+  },
+  header: {
+    margin: theme.spacing(1),
+    textAlign: "center"
   },
   control: {
     padding: theme.spacing(2)
@@ -33,16 +43,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ errors, touched, isSubmitting, handleChange }) => {
+const Login = ({ errors, touched, isSubmitting }) => {
   const classes = useStyles();
   return (
     <React.Fragment>
       <CssBaseline />
       <Container className={classes.container} maxWidth="xs">
-        <h1>Login</h1>
+        <Typography variant="h6" className={classes.header}>
+          Login
+        </Typography>
+
         <Form>
           <div>
             <Field
+              autoFocus={true}
               className={classes.formInput}
               type="email"
               name="email"
