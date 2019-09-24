@@ -1,95 +1,159 @@
+
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import {withFormik, Field, Form} from 'formik'
+import {withFormik, Field as FormikField, Form as FormikForm} from 'formik'
 import * as Yup from 'yup'
 
+import 'antd/dist/antd.css';
+import { Form, Icon, Input, Button, Checkbox, Select } from 'antd';
 
+import axios from 'axios'
+
+const FormItem = Form.Item
+const {Option} = Select
 //Sign up form
-const SignUpForm = ({values, errors, touched }) => {
-    //user state for new user
-    //const [user, setUser] = useState({})
+const SignUpForm = ({values, errors, touched}) => {
+  
     return(
-        <Form>
-            
-            {touched.firstname && errors.firstname && <p className="error_message">{errors.firstname}</p>}
-            <Field type="text" name="firstname" placeholder="First Name"/>
+        <div>
+            <h1>Register</h1>
+            <FormikForm>
+                <Form>
+                    <FormItem>
+                    {touched.firstname && errors.firstname && <p className="error_message">{errors.firstname}</p>}
+                    <FormikField
+                        name="firstname"
+                        render={({ field }) => <Input 
+                        {...field} name="firstname" placeholder="First Name" />}
+                            />
+                    </FormItem>
 
-            {touched.lastname && errors.lastname && <p className="error_message">{errors.lastname}</p>}
-            <Field type="text" name="lastname" placeholder="Last Name" />
+                    <FormItem>
+                    {touched.lastname && errors.lastname && <p className="error_message">{errors.lastname}</p>}
+                    <FormikField
+                        name="lastname"
+                        render={({ field }) => <Input 
+                        {...field} name="lastname" placeholder="Last Name" />}
+                            />
+                    </FormItem>
+                    
+                    <FormItem>
+                    {touched.email && errors.email && <p className="error_message">{errors.email}</p>}
+                    <FormikField
+                        name="email"
+                        render={({ field }) => <Input 
+                        prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        {...field} name="email" placeholder="email" />}
+                            />
+                    </FormItem>
 
-            {touched.email && errors.email && <p className="error_message">{errors.email}</p>}
-            <Field type="text" name="email" placeholder="Your email address"/>
+                    <FormItem>
+                    {touched.username && errors.username && <p className="error_message">{errors.username}</p>}
+                    <FormikField
+                        name="username"
+                        render={({ field }) => <Input 
+                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        {...field} name="username" placeholder="UserName" />}
+                            />
+                    </FormItem>
 
-            {touched.username && errors.username && <p className="error_message">{errors.username}</p>}
-            <Field type="text" name="username" placeholder="Username"/>
+                    <FormItem>
+                    {touched.password && errors.password && <p className="error_message">{errors.password}</p>}
+                    <FormikField
+                        name="password"
+                        render={({ field }) => <Input 
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        {...field} name="password" type="password" placeholder="password" />}
+                            />
+                    </FormItem>
 
-            {touched.password && errors.password && <p className="error_message">{errors.password}</p>}
-            <Field type="password" name="password" placeholder="Password"/>
+                    <FormItem>
+                        {touched.age && errors.age && <p className="error_message">{errors.age}</p>}
+                        <FormikField
+                            name="age"
+                            render={({ field }) => <Input 
+                            {...field} name="age" placeholder="Age" />}
+                        />
+                    </FormItem>
 
-            {touched.age && errors.age && <p className="error_message">{errors.age}</p>}
-            <Field type="number" name="age" placeholder="Age" />
+                    <FormItem label="Select">
+                        {touched.gender && errors.gender && <p className="error_message">{errors.gender}</p>}
+                        <Select name="gender" placeholder="Please select your gender" >
+                            <Option value='Male'>Male</Option>
+                            <Option value='Female'>Female</Option>
+                        </Select>
+                    </FormItem>
 
-            {touched.gender && errors.gender && <p className="error_message">{errors.gender}</p>}
-            <Field component="select" name="gender" >
-                <option value='Male'>Male</option>
-                <option value='Female'>Female</option>
-            </Field>
 
-            {touched.height && errors.height && <p className="error_message">{errors.height}</p>}
-            {touched.inches && errors.inches && <p className="error_message">{errors.inches}</p>}
-            <div>
-                <label> Feet:
-                    <Field component="select" name="feet">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option> 
-                    </Field>
-                </label>
+                   
+                    <div style={{display:"flex", justifyContent: "space-around" }}>
+                    {touched.feet && errors.feet && <p className="error_message">{errors.feet}</p>}
+                    {touched.inches && errors.inches && <p className="error_message">{errors.inches}</p>}
+                        <FormItem label="Feet">
+                            <Select name="feet" placeholder="ft" style={{width: 120}}>
+                                <Option value="1">1</Option>
+                                <Option value="2">2</Option>
+                                <Option value="3">3</Option>
+                                <Option value="4">4</Option>
+                                <Option value="5">5</Option>
+                                <Option value="6">6</Option> 
+                            </Select>
+                        </FormItem>
+                        
 
-                <label>
-                    Inches: 
-                    <Field component="select" name="inches">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </Field>
+                        <FormItem label="inches"  style={{width: 120}}>
+                            <Select name="inches" placeholder="in">
+                                <Option value="0">0</Option>
+                                <Option value="1">1</Option>
+                                <Option value="2">2</Option>
+                                <Option value="3">3</Option>
+                                <Option value="4">4</Option>
+                                <Option value="5">5</Option>
+                                <Option value="6">6</Option>
+                                <Option value="7">7</Option>
+                                <Option value="8">8</Option>
+                                <Option value="9">9</Option>
+                            </Select>
 
-                </label>
-            </div>
-            
-            {touched.weight && errors.weight && <p className="error_message">{errors.weight}</p>}
-            <Field type='number' name="weight" placeholder="weight"/> <span>(lbs)</span>
+                        </FormItem>
+                    </div>
+                    
+                    <FormItem>
+                    {touched.weight && errors.weight && <p className="error_message">{errors.weight}</p>}
+                    <FormikField
+                        name="weight"
+                        render={({ field }) => <Input 
+                        {...field} name="weight" type="number" placeholder="weight(lbs)" />}
+                            />
+                    </FormItem>
 
-            {touched.activity && errors.activity && <p className="error_message">{errors.activity}</p>}
-            <Field component="select" name='activity'>
-                <option value="0">0 days</option>
-                <option value="2">1-2 days</option>
-                <option value="4">3-4 days</option>option>
-                <option value="6">5-6 days</option>
-                <option value="7">7 days</option>
-            </Field>
-            
-            {touched.goals && errors.goals && <p className="error_message">{errors.goals}</p>}
-            <Field component="select" name="goals">
-                <option value="-20">aggressive weight loss (20% deficit)</option>
-                <option value="-15">moderate weight loss (15% deficit)</option>
-                <option value="-10">weight loss (10% deficit)</option>
-                <option value="0">maintain weight</option>
-                <option value="10">moderate weight gain (10% surplus)</option>
-            </Field>
+                    
+                    <FormItem>
+                    {touched.activity && errors.activity && <p className="error_message">{errors.activity}</p>}
+                        <Select name='activity' placeholder="Please select an activity level">
+                            <Option value="0">0 days</Option>
+                            <Option value="2">1-2 days</Option>
+                            <Option value="4">3-4 days</Option>
+                            <Option value="6">5-6 days</Option>
+                            <Option value="7">7 days</Option>
+                        </Select>
+                    </FormItem>
+                    
+                    <FormItem>
+                        {touched.goals && errors.goals && <p className="error_message">{errors.goals}</p>}
+                        <Select name="goals" placeholder="Plese select a goal">
+                            <Option value="-20">aggressive weight loss (20% deficit)</Option>
+                            <Option value="-15">moderate weight loss (15% deficit)</Option>
+                            <Option value="-10">weight loss (10% deficit)</Option>
+                            <Option value="0">maintain weight</Option>
+                            <Option value="10">moderate weight gain (10% surplus)</Option>
+                        </Select>
+                    </FormItem>
 
-            <button type="submit">Sign Up</button>
-        </Form>
+                    <Button type='primary' htmlType="submit" >Sign Up</Button>
+                </Form>
+            </FormikForm>
+        </div>
     )
 
 }
@@ -131,9 +195,9 @@ const SignUp = withFormik({
         gender: Yup.string()
         .required('Please select a gender'), 
         feet: Yup.number()
-        .required('Please enter you height'), 
+        .required('Please enter you feet'), 
         inches: Yup.number()
-        .required('Please enter your height'), 
+        .required('Please enter your feet'), 
         weight: Yup.number()
         .required('Please enter your weight'),
         activity: Yup.number()
@@ -142,9 +206,13 @@ const SignUp = withFormik({
         .required('Please select a goal')
 
     }), 
-    handleSubmit(values, {resetForm}){
-
-        console.log(values)
+    handleSubmit(values, {resetForm, setStatus}){
+        axios
+        .post('https://reqres.in/api/users/', values)
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => console.log(error.response))
         resetForm()
 
     }
@@ -155,15 +223,3 @@ const SignUp = withFormik({
 
 
 export default SignUp
-/*
-
-gender,
- age, 
- height (drop down list of heights listed as 5’ 7”, 5’ 8”, etc., 
-    current weight in lbs, 
-    how many days per week they exercise (drop down list: 0 days, 1-2 days, 3-4 days, 5-6 days, 7 days) and 
-    their goal (drop down list: aggressive weight loss (20% deficit), moderate weight loss (15% deficit), weight loss (10% deficit), 
-    maintain weight, moderate weight gain (10% surplus), 
-aggressive weight gain (15% deficit)
-*/
-
