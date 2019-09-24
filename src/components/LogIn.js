@@ -64,7 +64,13 @@ const LogIn = withFormik({
         axios
         .post('https://reqres.in/api/users/', values)
         .then(response => {
-            console.log(values.username)
+            if (values.username === "" && values.password === ""){
+
+            }else if(response.data.code == 204){
+                console.log("password doesn't match")
+            }else{
+                console.log("username does not exist")
+            }
         })
         .catch(error => console.log(error.response))
         resetForm()
