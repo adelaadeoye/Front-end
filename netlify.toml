@@ -1,4 +1,4 @@
 [build]
-base = "font-end/"
-publish = "front-end/build/"
-command = "front-end/yarn build"
+base = "./"
+publish = "./build/"
+command = "./yarn build"
