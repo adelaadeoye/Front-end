@@ -91,6 +91,7 @@ const SignUpForm = ({values, errors, touched}) => {
                     {touched.inches && errors.inches && <p className="error_message">{errors.inches}</p>}
                         <FormItem label="Feet">
                             <Select name="feet" placeholder="ft" style={{width: 120}}>
+                                
                                 <Option value="1">1</Option>
                                 <Option value="2">2</Option>
                                 <Option value="3">3</Option>
