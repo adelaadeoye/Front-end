@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     height: "100vh"
   },
   image: {
-    // backgroundImage: 'url(./../../images/macros2.jpg)',
+    backgroundImage: 'url(https://images.unsplash.com/photo-1559822933-b5972869b84d?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&dl=gesina-kunkel-04fUAPKw37Y-unsplash.jpg)',
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center"

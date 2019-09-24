@@ -25,7 +25,7 @@ export default function HeaderLayout (){
     return(
 <div className="header">
 <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
         
           <Typography variant="h6" className={classes.title}>

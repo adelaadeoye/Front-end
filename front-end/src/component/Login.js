@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
   },
   image: {
-    // backgroundImage: 'url(./../../images/macros2.jpg)',
+    backgroundImage: 'url(https://images.pexels.com/photos/1488031/pexels-photo-1488031.jpeg?cs=srgb&dl=antioxidant-berry-beverage-1488031.jpg&fm=jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
