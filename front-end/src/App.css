@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 .App-logo {
@@ -37,7 +38,16 @@
 .signUp_loginIn{
   margin: 50px auto;
   border: 1px solid black;
-  width: 400px;
   height: 400px;
 
+}
+.form{
+  /* display: flex;
+  flex-direction: column; */
+    margin: 0px auto;
+    width: 100%;
+
+}
+.MuiSelect-select{
+  width: 40px
 }
