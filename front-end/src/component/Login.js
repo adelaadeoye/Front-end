@@ -2,7 +2,6 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
@@ -12,6 +11,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
+import { withFormik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { TextField } from "formik-material-ui";
+import axios from "axios";
 
 
 
@@ -27,8 +30,7 @@ function Copyright() {
       </Typography>
     );
   }
-  
-
+ 
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100vh',
@@ -58,7 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Login() {
+ const Login= ({values})=> {
   const classes = useStyles();
 
   return (
@@ -73,8 +75,8 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
+          <Form className={classes.form} noValidate>
+            <Field component={TextField}
               variant="outlined"
               margin="normal"
               fullWidth
@@ -84,7 +86,7 @@ export default function Login() {
               autoComplete="email"
               autoFocus
             />
-            <TextField
+            <Field component={TextField}
               variant="outlined"
               margin="normal"
               fullWidth
@@ -122,9 +124,36 @@ export default function Login() {
             <Box mt={5}>
               <Copyright />
             </Box>
-          </form>
+          </Form>
         </div>
       </Grid>
     </Grid>
   );
-}
+};
+
+const FormikLogin = withFormik({
+  mapPropsToValues({ email, password }) {
+    return {
+     
+      email: email || "",
+      password: password || "",
+      
+    };
+  },
+  validationSchema: Yup.object().shape({
+    email: Yup.string().required("Email required"),
+    password: Yup.string().required("Please enter password")
+  }),
+  //You can use this to see the values
+  handleSubmit(values) {
+    axios
+      .post("https://reqres.in/api/users/", values)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err.res));
+  }
+})(Login);
+console.log("This is the HOC", FormikLogin);
+export default FormikLogin;
+

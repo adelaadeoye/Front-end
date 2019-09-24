@@ -3,26 +3,22 @@ import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import DateFnsUtils from "@date-io/date-fns";
 import MenuItem from "@material-ui/core/MenuItem";
 import clsx from "clsx";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Input from "@material-ui/core/Input";
 import { Link } from "react-router-dom";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import { withFormik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { TextField } from "formik-material-ui";
+import axios from "axios";
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker
 } from "@material-ui/pickers";
 
 function Copyright() {
@@ -67,9 +63,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignUp() {
+const SignUp = ({ values }) => {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
+  const [valuess, setValues] = React.useState({
     amount: "",
     password: "",
     weight: "",
@@ -77,21 +73,21 @@ export default function SignUp() {
     showPassword: false
   });
   const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value });
+    setValues({ ...valuess, [prop]: event.target.value });
   };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
+  // const handleClickShowPassword = () => {
+  //   setValues({ ...values, showPassword: !values.showPassword });
+  // };
 
-  const handleMouseDownPassword = event => {
-    event.preventDefault();
-  };
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  // const handleMouseDownPassword = event => {
+  //   event.preventDefault();
+  // };
+  // const [selectedDate, setSelectedDate] = React.useState(new Date());
 
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
+  // const handleDateChange = date => {
+  //   setSelectedDate(date);
+  // };
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -104,8 +100,9 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             On Boarding
           </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
+          <Form className={classes.form} noValidate>
+            <Field
+              component={TextField}
               variant="outlined"
               margin="normal"
               fullWidth
@@ -114,7 +111,9 @@ export default function SignUp() {
               name="fullName"
               autoFocus
             />
-            <TextField
+
+            <Field
+              component={TextField}
               variant="outlined"
               margin="normal"
               fullWidth
@@ -123,7 +122,9 @@ export default function SignUp() {
               name="email"
               autoComplete="email"
             />
-            <TextField
+
+            <Field
+              component={TextField}
               variant="outlined"
               margin="normal"
               required
@@ -134,7 +135,8 @@ export default function SignUp() {
               id="password"
               autoComplete="current-password"
             />
-            <TextField
+            <Field
+              component={TextField}
               variant="outlined"
               margin="normal"
               required
@@ -146,43 +148,69 @@ export default function SignUp() {
               autoComplete="current-password"
             />
             <Grid container justify={"space-between"}>
-              <Input
-                id="adornment-weight"
-                className={clsx(classes.margin, classes.textField)}
-                value={values.weight}
-                onChange={handleChange("weight")}
-                placeholder="Weight"
-                variant="outlined"
+              <Field
+                component={TextField}
+                margin="normal"
+                fullWidth
                 name="weight"
-                endAdornment={
-                  <InputAdornment position="end">Kg</InputAdornment>
-                }
-                aria-describedby="weight-helper-text"
-                inputProps={{
-                  "aria-label": "weight"
-                }}
+                label="Weight (lbs)"
+                type="number"
               />
-              <Input
-                id="adornment-height"
-                className={clsx(classes.margin, classes.textField)}
-                value={values.height}
-                onChange={handleChange("height")}
-                placeholder="Height"
-                variant="outlined"
+              <Field
+                component={TextField}
+                fullWidth
+                select
                 name="height"
-                endAdornment={
-                  <InputAdornment position="end">Ft</InputAdornment>
-                }
-                aria-describedby="weight-helper-text"
-                inputProps={{
-                  "aria-label": "weight"
-                }}
-              />
+                label="Height"
+                className={clsx(classes.margin, classes.textField)}
+                value={values.weightRange}
+                onChange={handleChange("weightRange")}
+              >
+                <MenuItem value="5'7">5'7</MenuItem>
+                <MenuItem value="5'8">5'8</MenuItem>
+                ))}
+              </Field>
+              <Field
+                component={TextField}
+                fullWidth
+                select
+                name="days"
+                label="Number of days you Excercise"
+                className={clsx(classes.margin, classes.textField)}
+                value={values.weightRange}
+                onChange={handleChange("weightRange")}
+              >
+                <MenuItem value="0">0 day</MenuItem>
+                <MenuItem value="2">1-2 days</MenuItem>
+                <MenuItem value="3">3-4 days</MenuItem>
+                <MenuItem value="6">5-6 days</MenuItem>
+                <MenuItem value="7">7 days</MenuItem>
+                ))}
+              </Field>
+              <Field
+                component={TextField}
+                fullWidth
+                select
+                name="goal"
+                label="Goal"
+                className={clsx(classes.margin, classes.textField)}
+                value={values.weightRange}
+                onChange={handleChange("weightRange")}
+              >
+                <MenuItem value="20">Aggressive Weight Loss</MenuItem>
+                <MenuItem value="15">Moderate Weight Loss</MenuItem>
+                <MenuItem value="10">Deficit Weight Loss</MenuItem>
+                <MenuItem value="0">Maintain Weight</MenuItem>
+                <MenuItem value="10">Moderate Weight Gain</MenuItem>
+                <MenuItem value="15">Aggressive Weight Gain</MenuItem>
+                ))}
+              </Field>
+              {/* nd their goal (drop down list: aggressive weight loss (20% deficit), moderate weight loss (15% deficit), weight loss (10% deficit), maintain weight, moderate weight gain (10% surplus), aggressive weight gain (15% deficit). */}
             </Grid>
 
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <Grid container justify={"space-between"}>
-                <KeyboardDatePicker
+                {/* <KeyboardDatePicker
                   margin="normal"
                   fullWidth
                   name="dob"
@@ -194,8 +222,21 @@ export default function SignUp() {
                   KeyboardButtonProps={{
                     "aria-label": "change date"
                   }}
+                /> */}
+                <Field component={ TextField}
+                  id="date"
+                  label="Birthday"
+                  type="date"
+                  name="dob"
+                  fullWidth
+                  defaultValue="2017-05-24"
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
                 />
-                <TextField
+                <Field
+                  component={TextField}
                   fullWidth
                   select
                   name="gender"
@@ -208,10 +249,10 @@ export default function SignUp() {
                   <MenuItem value="M">Male</MenuItem>
                   <MenuItem value="F">Female</MenuItem>
                   ))}
-                </TextField>
+                </Field>
               </Grid>
             </MuiPickersUtilsProvider>
-            
+
             <Button
               type="submit"
               fullWidth
@@ -231,9 +272,50 @@ export default function SignUp() {
             <Box mt={5}>
               <Copyright />
             </Box>
-          </form>
+          </Form>
         </div>
       </Grid>
     </Grid>
   );
-}
+};
+const FormikSignUp = withFormik({
+  mapPropsToValues({ fullName, email,days,goal,confirmPassword, password, weight, height, dob, gender }) {
+    return {
+      fullName: fullName || "",
+      email: email || "",
+      password: password || "",
+      confirmPassword:confirmPassword||"",
+      weight: weight || "",
+      height: height || "",
+      dob: dob || "",
+      goal: goal || "",
+      days: days || "",
+      gender: gender || ""
+    };
+  },
+  validationSchema: Yup.object().shape({
+    fullName: Yup.string().required("You must put a Full Name"),
+    email: Yup.string().required("Please enter Valid email address"),
+    weight: Yup.string().required(),
+    height: Yup.string().required(),
+    days: Yup.string().required(),
+    goal: Yup.string().required(),
+    gender: Yup.string().required(),
+    password: Yup.string().required('Password is required'),
+    dob: Yup.string().required("Date of Birth is required"),
+    confirmPassword: Yup.string()
+     .oneOf([Yup.ref('password'), null], 'Passwords must match')
+
+  }),
+  //You can use this to see the values
+  handleSubmit(values) {
+    axios
+      .post("https://reqres.in/api/users/", values)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err.res));
+  }
+})(SignUp);
+console.log("This is the HOC", FormikSignUp);
+export default FormikSignUp;
