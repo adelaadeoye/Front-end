@@ -151,6 +151,21 @@ const Register = ({ errors, touched, isSubmitting }) => {
           </div>
 
           <div>
+            <Typography className={classes.header}>Height</Typography>
+            <Field
+              className={classes.formInput}
+              name="height"
+              component="select"
+            >
+              {weight.map((height, index) => (
+                <option key={index} value={height}>
+                  {height}
+                </option>
+              ))}
+            </Field>
+          </div>
+
+          <div>
             <Typography className={classes.header}>
               Days spent exercising
             </Typography>
@@ -164,6 +179,18 @@ const Register = ({ errors, touched, isSubmitting }) => {
                   {days}
                 </option>
               ))}
+            </Field>
+          </div>
+
+          <div>
+            <Typography className={classes.header}>Goal</Typography>
+            <Field className={classes.formInput} component="select" name="goal">
+              <option value="20% deficit">Aggressive weight loss</option>
+              <option value="15% deficit">Moderate weight loss</option>
+              <option value="10% deficit">Weight loss</option>
+              <option value="0% deficit">Maintain weight</option>
+              <option value="10% surplus">Moderate weight gain</option>
+              <option value="15% surplus">Aggressive weight gain</option>
             </Field>
           </div>
 
@@ -191,7 +218,9 @@ const FormikForm = withFormik({
       exercise: 0,
       gender: "male",
       age: 18,
-      weight: 50
+      weight: 50,
+      height: "6'-0",
+      goal: "10% deficit"
     };
   },
   validationSchema: yup.object().shape({
@@ -210,7 +239,8 @@ const FormikForm = withFormik({
     password2: yup
       .string()
       .min(6, "Password must be at least 6 characters")
-      .required("Confirm password field is required")
+      .required("Confirm password field is required"),
+    exercise: yup.string().required()
   }),
   handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
     setErrors({ email: "Email is already taken" });
