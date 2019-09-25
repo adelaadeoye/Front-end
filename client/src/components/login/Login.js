@@ -17,12 +17,12 @@ const useStyles = makeStyles(theme => ({
     height: 140,
     width: 100
   },
+  control: {
+    padding: theme.spacing(2)
+  },
   header: {
     margin: theme.spacing(1),
     textAlign: "center"
-  },
-  control: {
-    padding: theme.spacing(2)
   },
   button: {
     margin: theme.spacing(1),
@@ -62,7 +62,9 @@ const Login = ({ errors, touched, isSubmitting }) => {
               name="email"
               placeholder="Email"
             />
-            {touched.email && errors.email && <p>{errors.email}</p>}
+            {touched.email && errors.email && (
+              <p className={classes.header}>{errors.email}</p>
+            )}
           </div>
           <div>
             <Field
@@ -71,7 +73,9 @@ const Login = ({ errors, touched, isSubmitting }) => {
               name="password"
               placeholder="Password"
             />
-            {touched.password && errors.password && <p>{errors.password}</p>}
+            {touched.password && errors.password && (
+              <p className={classes.header}>{errors.password}</p>
+            )}
           </div>
           {/* <button disabled={isSubmitting} type="submit">
         Log In
