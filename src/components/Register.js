@@ -1,28 +1,26 @@
-import React from 'react'
+
+import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import {withFormik, Field as FormikField, Form as FormikForm} from 'formik'
 import * as Yup from 'yup'
 
-//for styling using ant library
 import 'antd/dist/antd.css';
 import { Form, Icon, Input, Button, Checkbox, Select } from 'antd';
+
 import axios from 'axios'
+
 const FormItem = Form.Item
 const {Option} = Select
-
-
-const Register = ({values, errors, touched}) => {
+//Sign up form
+const RegisterForm = ({values, errors, touched}) => {
   
     return(
         <div>
-            <h1>Please Enter More Information About You</h1>
+            <h1>Register</h1>
             <FormikForm>
                 <Form>
-
-                    
                     <FormItem>
                     {touched.firstname && errors.firstname && <p className="error_message">{errors.firstname}</p>}
-                    
-                    {/* Formik field for first name */}
                     <FormikField
                         name="firstname"
                         render={({ field }) => <Input 
@@ -31,17 +29,45 @@ const Register = ({values, errors, touched}) => {
                     </FormItem>
 
                     <FormItem>
-                        {/* Formik field for last name */}
-                        {touched.lastname && errors.lastname && <p className="error_message">{errors.lastname}</p>}
-                        <FormikField
-                            name="lastname"
-                            render={({ field }) => <Input 
-                            {...field} name="lastname" placeholder="Last Name" />}
-                                />
+                    {touched.lastname && errors.lastname && <p className="error_message">{errors.lastname}</p>}
+                    <FormikField
+                        name="lastname"
+                        render={({ field }) => <Input 
+                        {...field} name="lastname" placeholder="Last Name" />}
+                            />
+                    </FormItem>
+                    
+                    <FormItem>
+                    {touched.email && errors.email && <p className="error_message">{errors.email}</p>}
+                    <FormikField
+                        name="email"
+                        render={({ field }) => <Input 
+                        prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        {...field} name="email" placeholder="email" />}
+                            />
                     </FormItem>
 
                     <FormItem>
-                        {/* Formik field for age*/}
+                    {touched.username && errors.username && <p className="error_message">{errors.username}</p>}
+                    <FormikField
+                        name="username"
+                        render={({ field }) => <Input 
+                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        {...field} name="username" placeholder="UserName" />}
+                            />
+                    </FormItem>
+
+                    <FormItem>
+                    {touched.password && errors.password && <p className="error_message">{errors.password}</p>}
+                    <FormikField
+                        name="password"
+                        render={({ field }) => <Input 
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        {...field} name="password" type="password" placeholder="password" />}
+                            />
+                    </FormItem>
+
+                    <FormItem>
                         {touched.age && errors.age && <p className="error_message">{errors.age}</p>}
                         <FormikField
                             name="age"
@@ -50,28 +76,22 @@ const Register = ({values, errors, touched}) => {
                         />
                     </FormItem>
 
-                        
-                        <FormItem label="Select">
-                            {touched.gender && errors.gender && <p className="error_message">{errors.gender}</p>}
-                            
-                            {/* Formik select menu for gender*/}
-                            <Select name="gender" placeholder="Please select your gender" >
-                                <Option value='Male'>Male</Option>
-                                <Option value='Female'>Female</Option>
-                            </Select>
-
+                    <FormItem label="Select">
+                        {touched.gender && errors.gender && <p className="error_message">{errors.gender}</p>}
+                        <Select name="gender" placeholder="Please select your gender" >
+                            <Option value='Male'>Male</Option>
+                            <Option value='Female'>Female</Option>
+                        </Select>
                     </FormItem>
 
 
-                    {/* this is a div that contains the select menu for both height and inches  */}
+                   
                     <div style={{display:"flex", justifyContent: "space-around" }}>
-                        
-                        {touched.feet && errors.feet && <p className="error_message">{errors.feet}</p>}
-                        {touched.inches && errors.inches && <p className="error_message">{errors.inches}</p>}
+                    {touched.feet && errors.feet && <p className="error_message">{errors.feet}</p>}
+                    {touched.inches && errors.inches && <p className="error_message">{errors.inches}</p>}
                         <FormItem label="Feet">
-
-                            {/* drop down menu for feet*/}
                             <Select name="feet" placeholder="ft" style={{width: 120}}>
+                                
                                 <Option value="1">1</Option>
                                 <Option value="2">2</Option>
                                 <Option value="3">3</Option>
@@ -79,12 +99,10 @@ const Register = ({values, errors, touched}) => {
                                 <Option value="5">5</Option>
                                 <Option value="6">6</Option> 
                             </Select>
-
                         </FormItem>
                         
-                        <FormItem label="inches"  style={{width: 120}}>
 
-                            {/*drop down menu for inches*/}
+                        <FormItem label="inches"  style={{width: 120}}>
                             <Select name="inches" placeholder="in">
                                 <Option value="0">0</Option>
                                 <Option value="1">1</Option>
@@ -103,20 +121,16 @@ const Register = ({values, errors, touched}) => {
                     
                     <FormItem>
                     {touched.weight && errors.weight && <p className="error_message">{errors.weight}</p>}
-
-                        {/*Input field for weight*/}
-                        <FormikField
-                            name="weight"
-                            render={({ field }) => <Input 
-                            {...field} name="weight" type="number" placeholder="weight(lbs)" />}
-                                />
+                    <FormikField
+                        name="weight"
+                        render={({ field }) => <Input 
+                        {...field} name="weight" type="number" placeholder="weight(lbs)" />}
+                            />
                     </FormItem>
 
                     
                     <FormItem>
                     {touched.activity && errors.activity && <p className="error_message">{errors.activity}</p>}
-                        
-                        {/* drop down menu to select activity*/}
                         <Select name='activity' placeholder="Please select an activity level">
                             <Option value="0">0 days</Option>
                             <Option value="2">1-2 days</Option>
@@ -128,8 +142,6 @@ const Register = ({values, errors, touched}) => {
                     
                     <FormItem>
                         {touched.goals && errors.goals && <p className="error_message">{errors.goals}</p>}
-
-                        {/*Drop down menu for goals*/}
                         <Select name="goals" placeholder="Plese select a goal">
                             <Option value="-20">aggressive weight loss (20% deficit)</Option>
                             <Option value="-15">moderate weight loss (15% deficit)</Option>
@@ -137,7 +149,6 @@ const Register = ({values, errors, touched}) => {
                             <Option value="0">maintain weight</Option>
                             <Option value="10">moderate weight gain (10% surplus)</Option>
                         </Select>
-
                     </FormItem>
 
                     <Button type='primary' htmlType="submit" >Sign Up</Button>
@@ -149,7 +160,7 @@ const Register = ({values, errors, touched}) => {
 }
 
 //used formik to manage form
-const SignUp = withFormik({
+const Register = withFormik({
 
     mapPropsToValues({firstname, lastname, email, username, password, age, gender, feet, inches, weight, activity, goals}){
         return {
@@ -176,6 +187,10 @@ const SignUp = withFormik({
         email: Yup.string()
         .email('Please enter a valid email ')
         .required('An email is required to create an account'), 
+        username: Yup.string()
+        .required('An username required to create an account'), 
+        password: Yup.string()
+        .required('Please enter a password'), 
         age: Yup.number()
         .required('Age is required'), 
         gender: Yup.string()
@@ -194,16 +209,16 @@ const SignUp = withFormik({
     }), 
     handleSubmit(values, {resetForm, setStatus}){
         axios
-        .post('https://buildweek-macrocalc.herokuapp.com/usermetrics/add/{username}', values)
+        .post('https://reqres.in/api/users/', values)
         .then(response => {
-            console.log(response.data)
+            console.log(response)
         })
         .catch(error => console.log(error.response))
         resetForm()
 
     }
 
-})(SignUpForm)
+})(RegisterForm)
 
 
 

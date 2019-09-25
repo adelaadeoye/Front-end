@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {withFormik, Field, Form as FormikForm, Field as FormikField} from 'formik'
+import {Link} from 'react-router-dom'
+import {withFormik, Form as FormikForm, Field as FormikField} from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 
@@ -14,7 +15,7 @@ const LogInForm = ({touched, errors, status}, props) =>{
     
     return(
         <div>
-            <h1>Login</h1>
+            <h1>Welcome Back!</h1>
             <FormikForm>
                 
                 <Form>
@@ -39,7 +40,7 @@ const LogInForm = ({touched, errors, status}, props) =>{
                         name="password" type="password" placeholder="password" />}
                     />
                     </FormItem>
-                <Button type="primary" htmlType="submit">LogIn</Button>
+              <Button type="primary" htmlType="submit">LogIn</Button>
                 </Form>
             </FormikForm>
         </div>
@@ -64,7 +65,7 @@ const LogIn = withFormik({
         axios
         .post('https://buildweek-macrocalc.herokuapp.com/login', values)
         .then(response => {
-
+                
             console.log(response.data)
             if (values.username === "" && values.password === ""){
 

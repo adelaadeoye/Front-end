@@ -1,8 +1,7 @@
 
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {withFormik, Field as FormikField, Form as FormikForm} from 'formik'
 import * as Yup from 'yup'
-
 import 'antd/dist/antd.css';
 import { Form, Icon, Input, Button, Checkbox, Select } from 'antd';
 
@@ -12,15 +11,20 @@ const FormItem = Form.Item
 const {Option} = Select
 
 
-const SignUpForm = ({errors, touched}) => {
+const SignUpForm = ({errors, touched, status}) => {
+
+   
   
     return(
         <div>
-            <h1>Register</h1>
+            <h1>Sign Up!</h1>
             <FormikForm>
                 <Form>
                     <FormItem>
+                        {/*error message for username*/}
                         {touched.username && errors.username && <p className="error_message">{errors.username}</p>}
+
+                        {/*Input field for username*/}
                         <FormikField
                             name="username"
                             render={({ field }) => <Input 
@@ -29,8 +33,12 @@ const SignUpForm = ({errors, touched}) => {
                                 />
                     </FormItem>
 
+
                     <FormItem>
+                        {/*error message for password*/}
                         {touched.password && errors.password && <p className="error_message">{errors.password}</p>}
+
+                        {/*input field for password*/}
                         <FormikField
                             name="password"
                             render={({ field }) => <Input 
@@ -64,11 +72,12 @@ const SignUp = withFormik({
         .required('Please enter a password'), 
 
     }), 
-    handleSubmit(values, {resetForm, setStatus}){
+    handleSubmit(values, {resetForm, props}){
         axios
         .post('https://buildweek-macrocalc.herokuapp.com/createnewuser', values)
         .then(response => {
-            console.log(response.data)
+
+            props.history.push('/login')
         })
         .catch(error => console.log(error.response))
         resetForm()
