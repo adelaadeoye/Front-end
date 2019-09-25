@@ -62,12 +62,14 @@ const LogIn = withFormik({
     }), 
     handleSubmit(values, {resetForm, setStatus}){
         axios
-        .post('https://reqres.in/api/users/', values)
+        .post('https://buildweek-macrocalc.herokuapp.com/login', values)
         .then(response => {
+
+            console.log(response.data)
             if (values.username === "" && values.password === ""){
 
             }else if(response.data.code == 204){
-                console.log("password doesn't match")
+                console.log("incorrect password")
             }else{
                 console.log("username does not exist")
             }

@@ -1,0 +1,4 @@
+
+/    /home
+/SignUp /SignUp
+/ForgetPassword  /ForgetPassword
