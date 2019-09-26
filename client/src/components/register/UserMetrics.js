@@ -1,22 +1,22 @@
-import React from 'react'
-import { withFormik, Form, Field } from 'formik'
+import React from "react";
+import { withFormik, Form, Field } from "formik";
 import {
   Typography,
   makeStyles,
   Button,
   Container,
   CssBaseline
-} from '@material-ui/core'
-import * as yup from 'yup'
+} from "@material-ui/core";
+import * as yup from "yup";
 
-const ages = []
+const ages = [];
 for (let i = 18; i <= 60; i++) {
-  ages.push(i)
+  ages.push(i);
 }
 
-const weight = []
+const weight = [];
 for (let i = 50; i <= 300; i++) {
-  weight.push(i)
+  weight.push(i);
 }
 
 const useStyles = makeStyles(theme => ({
@@ -29,21 +29,21 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     margin: theme.spacing(1),
-    textAlign: 'center'
+    textAlign: "center"
   },
   control: {
     padding: theme.spacing(2)
   },
   button: {
     margin: theme.spacing(1),
-    width: '100%'
+    width: "100%"
   },
   input: {
-    display: 'none'
+    display: "none"
   },
   formInput: {
     margin: theme.spacing(1),
-    width: '100%',
+    width: "100%",
     height: 40,
     borderRadius: 5,
     padding: theme.spacing(1)
@@ -51,15 +51,15 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginTop: theme.spacing(5)
   }
-}))
+}));
 
 const Register = ({ errors, touched, isSubmitting }) => {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <>
       <CssBaseline />
-      <Container className={classes.container} maxWidth='xs'>
-        <Typography variant='h6' className={classes.header}>
+      <Container className={classes.container} maxWidth="xs">
+        <Typography variant="h6" className={classes.header}>
           Register
         </Typography>
 
@@ -68,9 +68,9 @@ const Register = ({ errors, touched, isSubmitting }) => {
             <Field
               autoFocus
               className={classes.formInput}
-              type='name'
-              name='name'
-              placeholder='Name'
+              type="name"
+              name="name"
+              placeholder="Name"
             />
             {touched.name && errors.name && (
               <p className={classes.header}>{errors.name}</p>
@@ -78,55 +78,20 @@ const Register = ({ errors, touched, isSubmitting }) => {
           </div>
 
           <div>
-            <Field
-              className={classes.formInput}
-              type='email'
-              name='email'
-              placeholder='Email'
-            />
-            {touched.email && errors.email && (
-              <p className={classes.header}>{errors.email}</p>
-            )}
-          </div>
-          <div>
-            <Field
-              className={classes.formInput}
-              type='password'
-              name='password'
-              placeholder='Password'
-            />
-            {touched.password && errors.password && (
-              <p className={classes.header}>{errors.password}</p>
-            )}
-          </div>
-
-          <div>
-            <Field
-              className={classes.formInput}
-              type='password'
-              name='password2'
-              placeholder='Confirm Password'
-            />
-            {touched.password2 && errors.password2 && (
-              <p className={classes.header}>{errors.password2}</p>
-            )}
-          </div>
-
-          <div>
             <Typography className={classes.header}>Gender</Typography>
             <Field
               className={classes.formInput}
-              name='gender'
-              component='select'
+              name="gender"
+              component="select"
             >
-              <option value='male'>Male</option>
-              <option value='female'>Female</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </Field>
           </div>
 
           <div>
             <Typography className={classes.header}>Age</Typography>
-            <Field className={classes.formInput} name='age' component='select'>
+            <Field className={classes.formInput} name="age" component="select">
               {ages.map((age, index) => (
                 <option key={index} value={age}>
                   {age}
@@ -139,8 +104,8 @@ const Register = ({ errors, touched, isSubmitting }) => {
             <Typography className={classes.header}>Weight</Typography>
             <Field
               className={classes.formInput}
-              name='weight'
-              component='select'
+              name="weight"
+              component="select"
             >
               {weight.map((weight, index) => (
                 <option key={index} value={weight}>
@@ -154,8 +119,8 @@ const Register = ({ errors, touched, isSubmitting }) => {
             <Typography className={classes.header}>Height</Typography>
             <Field
               className={classes.formInput}
-              name='height'
-              component='select'
+              name="height"
+              component="select"
             >
               {weight.map((height, index) => (
                 <option key={index} value={height}>
@@ -171,10 +136,10 @@ const Register = ({ errors, touched, isSubmitting }) => {
             </Typography>
             <Field
               className={classes.formInput}
-              component='select'
-              name='exercise'
+              component="select"
+              name="exercise"
             >
-              {['0', '1-2', '3-4', '5-6', '7'].map(days => (
+              {["0", "1-2", "3-4", "5-6", "7"].map(days => (
                 <option key={days} value={days}>
                   {days}
                 </option>
@@ -184,20 +149,20 @@ const Register = ({ errors, touched, isSubmitting }) => {
 
           <div>
             <Typography className={classes.header}>Goal</Typography>
-            <Field className={classes.formInput} component='select' name='goal'>
-              <option value='20% deficit'>Aggressive weight loss</option>
-              <option value='15% deficit'>Moderate weight loss</option>
-              <option value='10% deficit'>Weight loss</option>
-              <option value='0% deficit'>Maintain weight</option>
-              <option value='10% surplus'>Moderate weight gain</option>
-              <option value='15% surplus'>Aggressive weight gain</option>
+            <Field className={classes.formInput} component="select" name="goal">
+              <option value="20% deficit">Aggressive weight loss</option>
+              <option value="15% deficit">Moderate weight loss</option>
+              <option value="10% deficit">Weight loss</option>
+              <option value="0% deficit">Maintain weight</option>
+              <option value="10% surplus">Moderate weight gain</option>
+              <option value="15% surplus">Aggressive weight gain</option>
             </Field>
           </div>
 
           <Button
-            type='submit'
-            variant='contained'
-            color='primary'
+            type="submit"
+            variant="contained"
+            color="primary"
             className={classes.button}
           >
             Register
@@ -205,50 +170,37 @@ const Register = ({ errors, touched, isSubmitting }) => {
         </Form>
       </Container>
     </>
-  )
-}
+  );
+};
 
 const FormikForm = withFormik({
-  mapPropsToValues () {
+  mapPropsToValues() {
     return {
-      name: '',
-      email: '',
-      password: '',
-      password2: '',
+      name: "",
+      email: "",
+      password: "",
+      password2: "",
       exercise: 0,
-      gender: 'male',
+      gender: "male",
       age: 18,
       weight: 50,
       height: "6'-0",
-      goal: '10% deficit'
-    }
+      goal: "10% deficit"
+    };
   },
   validationSchema: yup.object().shape({
     name: yup
       .string()
-      .min(2, 'Name must be at least 2 characters')
-      .required('Name is required'),
-    email: yup
-      .string()
-      .email('Email is not valid')
-      .required('Email is required'),
-    password: yup
-      .string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
-    password2: yup
-      .string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Confirm password field is required'),
-    exercise: yup.string().required()
+      .min(2, "Name must be at least 2 characters")
+      .required("Name is required")
   }),
-  handleSubmit (values, { resetForm, setErrors, setSubmitting }) {
-    setErrors({ email: 'Email is already taken' })
-    resetForm()
-    setSubmitting(false)
-    console.log(values)
+  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
+    setErrors({ email: "Email is already taken" });
+    resetForm();
+    setSubmitting(false);
+    console.log(values);
     // make axios request to backend
   }
-})(Register)
+})(Register);
 
-export default FormikForm
+export default FormikForm;
