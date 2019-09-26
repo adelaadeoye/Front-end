@@ -14,9 +14,22 @@ for (let i = 18; i <= 60; i++) {
   ages.push(i);
 }
 
-const weight = [];
-for (let i = 50; i <= 300; i++) {
+let weight = [];
+for (let i = 50; i <= 100; i++) {
   weight.push(i);
+}
+
+const heights = [];
+const heightKeys = [];
+const heightValues = [];
+let index = 0;
+for (let i = 12; i <= 30; i++) {
+  heightKeys.push(i);
+  heightValues.push(convertInchesToFeet(i));
+  let myobj = {};
+  myobj[heightKeys[index]] = heightValues[index];
+  heights.push(myobj);
+  index++;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -60,7 +73,7 @@ const Register = ({ errors, touched, isSubmitting }) => {
       <CssBaseline />
       <Container className={classes.container} maxWidth="xs">
         <Typography variant="h6" className={classes.header}>
-          Register
+          Add User Metrics
         </Typography>
 
         <Form>
@@ -107,9 +120,9 @@ const Register = ({ errors, touched, isSubmitting }) => {
               name="weight"
               component="select"
             >
-              {weight.map((weight, index) => (
-                <option key={index} value={weight}>
-                  {weight}
+              {weight.map((value, index) => (
+                <option key={index} value={value}>
+                  {value}
                 </option>
               ))}
             </Field>
@@ -122,9 +135,9 @@ const Register = ({ errors, touched, isSubmitting }) => {
               name="height"
               component="select"
             >
-              {weight.map((height, index) => (
-                <option key={index} value={height}>
-                  {height}
+              {heights.map((height, index) => (
+                <option key={index} value={Object.keys(height)[0]}>
+                  {Object.values(height)[0]}
                 </option>
               ))}
             </Field>
@@ -137,7 +150,7 @@ const Register = ({ errors, touched, isSubmitting }) => {
             <Field
               className={classes.formInput}
               component="select"
-              name="exercise"
+              name="exercisefrequency"
             >
               {["0", "1-2", "3-4", "5-6", "7"].map(days => (
                 <option key={days} value={days}>
@@ -177,14 +190,11 @@ const FormikForm = withFormik({
   mapPropsToValues() {
     return {
       name: "",
-      email: "",
-      password: "",
-      password2: "",
-      exercise: 0,
+      exercisefrequency: 0,
       gender: "male",
       age: 18,
       weight: 50,
-      height: "6'-0",
+      height: "12",
       goal: "10% deficit"
     };
   },
@@ -204,3 +214,15 @@ const FormikForm = withFormik({
 })(Register);
 
 export default FormikForm;
+
+function convertInchesToFeet(inches) {
+  let feet = inches / 12;
+  if (Number.isInteger(feet)) {
+    return `${Math.round(feet)}' 0"'`;
+  } else {
+    let wholeNumber = feet - (inches % 12) / 12;
+    let newWholeNumber = wholeNumber * 12;
+    let remainder = inches - newWholeNumber;
+    return `${Math.round(wholeNumber)}' ${Math.round(remainder)}"`;
+  }
+}
