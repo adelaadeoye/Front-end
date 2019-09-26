@@ -1,13 +1,13 @@
-import React from "react";
-import { withFormik, Form, Field } from "formik";
+import React from 'react'
+import { withFormik, Form, Field } from 'formik'
 import {
   Typography,
   makeStyles,
   Button,
   Container,
   CssBaseline
-} from "@material-ui/core";
-import * as yup from "yup";
+} from '@material-ui/core'
+import * as yup from 'yup'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,18 +22,18 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     margin: theme.spacing(1),
-    textAlign: "center"
+    textAlign: 'center'
   },
   button: {
     margin: theme.spacing(1),
-    width: "100%"
+    width: '100%'
   },
   input: {
-    display: "none"
+    display: 'none'
   },
   formInput: {
     margin: theme.spacing(1),
-    width: "100%",
+    width: '100%',
     height: 40,
     borderRadius: 5,
     padding: theme.spacing(1)
@@ -41,26 +41,26 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginTop: theme.spacing(5)
   }
-}));
+}))
 
 const Login = ({ errors, touched, isSubmitting }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
-      <Container className={classes.container} maxWidth="xs">
-        <Typography variant="h6" className={classes.header}>
+      <Container className={classes.container} maxWidth='xs'>
+        <Typography variant='h6' className={classes.header}>
           Login
         </Typography>
 
         <Form>
           <div>
             <Field
-              autoFocus={true}
+              autoFocus
               className={classes.formInput}
-              type="email"
-              name="email"
-              placeholder="Email"
+              type='email'
+              name='email'
+              placeholder='Email'
             />
             {touched.email && errors.email && (
               <p className={classes.header}>{errors.email}</p>
@@ -69,9 +69,9 @@ const Login = ({ errors, touched, isSubmitting }) => {
           <div>
             <Field
               className={classes.formInput}
-              type="password"
-              name="password"
-              placeholder="Password"
+              type='password'
+              name='password'
+              placeholder='Password'
             />
             {touched.password && errors.password && (
               <p className={classes.header}>{errors.password}</p>
@@ -81,43 +81,43 @@ const Login = ({ errors, touched, isSubmitting }) => {
         Log In
       </button> */}
           <Button
-            type="submit"
-            variant="contained"
-            color="primary"
+            type='submit'
+            variant='contained'
+            color='primary'
             className={classes.button}
           >
             Login
           </Button>
         </Form>
       </Container>
-    </React.Fragment>
-  );
-};
+    </>
+  )
+}
 
 const FormikForm = withFormik({
-  mapPropsToValues() {
+  mapPropsToValues () {
     return {
-      email: "",
-      password: ""
-    };
+      email: '',
+      password: ''
+    }
   },
   validationSchema: yup.object().shape({
     email: yup
       .string()
-      .email("Email is not valid")
-      .required("Email is required"),
+      .email('Email is not valid')
+      .required('Email is required'),
     password: yup
       .string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required")
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required')
   }),
-  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
-    setErrors({ email: "Email is already taken" });
-    resetForm();
-    setSubmitting(false);
-    console.log(values);
+  handleSubmit (values, { resetForm, setErrors, setSubmitting }) {
+    setErrors({ email: 'Email is already taken' })
+    resetForm()
+    setSubmitting(false)
+    console.log(values)
     // make axios request to backend
   }
-})(Login);
+})(Login)
 
-export default FormikForm;
+export default FormikForm
