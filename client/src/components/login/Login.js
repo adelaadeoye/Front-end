@@ -76,6 +76,8 @@ const Login = props => {
               placeholder="Username"
               value={user.username}
               onChange={handleChange}
+              required
+              minLength="2"
             />
           </div>
           <div>
@@ -86,6 +88,8 @@ const Login = props => {
               placeholder="Password"
               value={user.password}
               onChange={handleChange}
+              required
+              minLength="6"
             />
           </div>
           <Button
