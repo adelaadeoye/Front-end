@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { withFormik, Form, Field } from "formik";
 import {
   Typography,
   makeStyles,
@@ -6,6 +7,7 @@ import {
   Container,
   CssBaseline
 } from "@material-ui/core";
+import * as yup from "yup";
 
 const ages = [];
 for (let i = 18; i <= 60; i++) {
@@ -64,111 +66,90 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserMetrics = props => {
+const Register = ({ errors, touched, isSubmitting }) => {
   const classes = useStyles();
-  const [userMetrics, setUserMetrics] = useState({
-    username: "",
-    exercisefrequency: 0,
-    gender: "male",
-    age: 18,
-    weight: 50,
-    height: "12",
-    goal: "10% deficit"
-  });
-
-  const handleChange = event => {
-    setUserMetrics({ ...userMetrics, [event.target.name]: event.target.value });
-    console.log(userMetrics);
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(userMetrics);
-  };
   return (
-    <div>
+    <>
       <CssBaseline />
       <Container className={classes.container} maxWidth="xs">
         <Typography variant="h6" className={classes.header}>
           Add User Metrics
         </Typography>
-        <form onSubmit={handleSubmit}>
+
+        <Form>
           <div>
-            <input
+            <Field
               autoFocus
-              type="text"
               className={classes.formInput}
-              name="username"
-              placeholder="name"
-              onChange={handleChange}
-              value={userMetrics.username}
+              type="name"
+              name="name"
+              placeholder="Name"
             />
+            {touched.name && errors.name && (
+              <p className={classes.header}>{errors.name}</p>
+            )}
           </div>
 
           <div>
             <Typography className={classes.header}>Gender</Typography>
-            <select
-              onChange={handleChange}
+            <Field
               className={classes.formInput}
               name="gender"
+              component="select"
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
-            </select>
+            </Field>
           </div>
 
           <div>
             <Typography className={classes.header}>Age</Typography>
-            <select
-              className={classes.formInput}
-              name="age"
-              onChange={handleChange}
-            >
+            <Field className={classes.formInput} name="age" component="select">
               {ages.map((age, index) => (
                 <option key={index} value={age}>
                   {age}
                 </option>
               ))}
-            </select>
+            </Field>
           </div>
 
           <div>
             <Typography className={classes.header}>Weight</Typography>
-            <select
+            <Field
               className={classes.formInput}
               name="weight"
-              onChange={handleChange}
+              component="select"
             >
               {weight.map((value, index) => (
                 <option key={index} value={value}>
                   {value}
                 </option>
               ))}
-            </select>
+            </Field>
           </div>
 
           <div>
             <Typography className={classes.header}>Height</Typography>
-            <select
+            <Field
               className={classes.formInput}
               name="height"
-              onChange={handleChange}
+              component="select"
             >
               {heights.map((height, index) => (
                 <option key={index} value={Object.keys(height)[0]}>
                   {Object.values(height)[0]}
                 </option>
               ))}
-            </select>
+            </Field>
           </div>
 
           <div>
             <Typography className={classes.header}>
               Days spent exercising
             </Typography>
-            <select
+            <Field
               className={classes.formInput}
-              onChange={handleChange}
+              component="select"
               name="exercisefrequency"
             >
               {["0", "1-2", "3-4", "5-6", "7"].map(days => (
@@ -176,23 +157,19 @@ const UserMetrics = props => {
                   {days}
                 </option>
               ))}
-            </select>
+            </Field>
           </div>
 
           <div>
             <Typography className={classes.header}>Goal</Typography>
-            <select
-              className={classes.formInput}
-              onChange={handleChange}
-              name="goal"
-            >
+            <Field className={classes.formInput} component="select" name="goal">
               <option value="20% deficit">Aggressive weight loss</option>
               <option value="15% deficit">Moderate weight loss</option>
               <option value="10% deficit">Weight loss</option>
               <option value="0% deficit">Maintain weight</option>
               <option value="10% surplus">Moderate weight gain</option>
               <option value="15% surplus">Aggressive weight gain</option>
-            </select>
+            </Field>
           </div>
 
           <Button
@@ -201,15 +178,41 @@ const UserMetrics = props => {
             color="primary"
             className={classes.button}
           >
-            Add User Metrics
+            Register
           </Button>
-        </form>
+        </Form>
       </Container>
-    </div>
+    </>
   );
 };
 
-export default UserMetrics;
+const FormikForm = withFormik({
+  mapPropsToValues() {
+    return {
+      name: "",
+      exercisefrequency: 0,
+      gender: "male",
+      age: 18,
+      weight: 50,
+      height: "12",
+      goal: "10% deficit"
+    };
+  },
+  validationSchema: yup.object().shape({
+    name: yup
+      .string()
+      .min(2, "Name must be at least 2 characters")
+      .required("Name is required")
+  }),
+  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
+    setErrors({ email: "Email is already taken" });
+    resetForm();
+    setSubmitting(false);
+    // make axios request to backend
+  }
+})(Register);
+
+export default FormikForm;
 
 function convertInchesToFeet(inches) {
   let feet = inches / 12;
