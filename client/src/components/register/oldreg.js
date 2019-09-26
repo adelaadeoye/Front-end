@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { withFormik, Form, Field } from "formik";
 import {
   Typography,
   makeStyles,
   Button,
-  TextField,
   Container,
   CssBaseline
 } from "@material-ui/core";
 import * as yup from "yup";
-import { mergeClasses } from "@material-ui/styles";
-import UserMetrics from "../register/UserMetrics";
+
+const ages = [];
+for (let i = 18; i <= 60; i++) {
+  ages.push(i);
+}
+
+const weight = [];
+for (let i = 50; i <= 300; i++) {
+  weight.push(i);
+}
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,12 +27,12 @@ const useStyles = makeStyles(theme => ({
     height: 140,
     width: 100
   },
-  control: {
-    padding: theme.spacing(2)
-  },
   header: {
     margin: theme.spacing(1),
     textAlign: "center"
+  },
+  control: {
+    padding: theme.spacing(2)
   },
   button: {
     margin: theme.spacing(1),
@@ -46,64 +53,77 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = props => {
+const Register = ({ errors, touched }) => {
   const classes = useStyles();
-  const [user, setUser] = useState({ username: "", password: "" });
-  const handleChange = event => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(user);
-  };
-
   return (
-    <div>
+    <>
       <CssBaseline />
       <Container className={classes.container} maxWidth="xs">
         <Typography variant="h6" className={classes.header}>
-          Login
+          Register
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <Form>
           <div>
-            <input
-              autoFocus
+            <Field
               className={classes.formInput}
               type="text"
               name="username"
               placeholder="Username"
-              value={user.username}
-              onChange={handleChange}
-              required
-              minLength="2"
             />
+            {touched.username && errors.username && (
+              <p className={classes.header}>{errors.username}</p>
+            )}
           </div>
           <div>
-            <input
+            <Field
               className={classes.formInput}
               type="password"
               name="password"
               placeholder="Password"
-              value={user.password}
-              onChange={handleChange}
-              required
-              minLength="6"
             />
+            {touched.password && errors.password && (
+              <p className={classes.header}>{errors.password}</p>
+            )}
           </div>
+
           <Button
             type="submit"
             variant="contained"
             color="primary"
             className={classes.button}
           >
-            Login
+            Register
           </Button>
-        </form>
+        </Form>
       </Container>
-    </div>
+    </>
   );
 };
 
-export default Login;
+const FormikForm = withFormik({
+  mapPropsToValues() {
+    return {
+      username: "",
+      password: ""
+    };
+  },
+  validationSchema: yup.object().shape({
+    username: yup.string().required("Username is required"),
+    password: yup
+      .string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required")
+  }),
+  handleSubmit(values, { resetForm, setErrors }) {
+    // use this if the backend api returns us with error of user already exists
+    setErrors({ email: "Email is already taken" });
+    resetForm();
+    console.log(values);
+
+    // make axios request to backend
+    // reroute to login page
+  }
+})(Register);
+
+export default FormikForm;

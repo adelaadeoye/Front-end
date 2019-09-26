@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import * as yup from "yup";
 import { mergeClasses } from "@material-ui/styles";
-import UserMetrics from "../register/UserMetrics";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,7 +54,7 @@ const Login = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(UserMetrics);
+    console.log(user);
   };
 
   return (
