@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { withFormik, Form, Field } from "formik";
 import {
   Typography,
   makeStyles,
   Button,
+  TextField,
   Container,
   CssBaseline
 } from "@material-ui/core";
 import * as yup from "yup";
+import { mergeClasses } from "@material-ui/styles";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,43 +45,49 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ errors, touched, isSubmitting }) => {
+const Login = props => {
   const classes = useStyles();
+  const [user, setUser] = useState({ username: "", password: "" });
+  const handleChange = event => {
+    setUser({ ...user, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    // console.log(user.username);
+    console.log(user.password);
+  };
+
   return (
-    <>
+    <div>
       <CssBaseline />
       <Container className={classes.container} maxWidth="xs">
         <Typography variant="h6" className={classes.header}>
           Login
         </Typography>
 
-        <Form>
+        <form onSubmit={handleSubmit}>
           <div>
-            <Field
+            <input
               autoFocus
               className={classes.formInput}
               type="text"
               name="username"
               placeholder="Username"
+              value={user.username}
+              onChange={handleChange}
             />
-            {touched.username && errors.username && (
-              <p className={classes.header}>{errors.username}</p>
-            )}
           </div>
           <div>
-            <Field
+            <input
               className={classes.formInput}
               type="password"
               name="password"
               placeholder="Password"
+              value={user.password}
+              onChange={handleChange}
             />
-            {touched.password && errors.password && (
-              <p className={classes.header}>{errors.password}</p>
-            )}
           </div>
-          {/* <button disabled={isSubmitting} type="submit">
-        Log In
-      </button> */}
           <Button
             type="submit"
             variant="contained"
@@ -88,34 +96,10 @@ const Login = ({ errors, touched, isSubmitting }) => {
           >
             Login
           </Button>
-        </Form>
+        </form>
       </Container>
-    </>
+    </div>
   );
 };
 
-const FormikForm = withFormik({
-  mapPropsToValues() {
-    return {
-      username: "",
-      password: ""
-    };
-  },
-  validationSchema: yup.object().shape({
-    username: yup.string().required("Username is required"),
-    password: yup
-      .string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required")
-  }),
-  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
-    setErrors({ email: "Email is already taken" });
-    resetForm();
-    setSubmitting(false);
-    console.log(values);
-    // make axios request to backend
-    // route to dashboard on success
-  }
-})(Login);
-
-export default FormikForm;
+export default Login;

@@ -1,71 +1,17 @@
-import React from "react";
-import { withFormik, Form, Field } from "formik";
-import {
-  Typography,
-  makeStyles,
-  Button,
-  Container,
-  CssBaseline
-} from "@material-ui/core";
-import * as yup from "yup";
-
-const ages = [];
-for (let i = 18; i <= 60; i++) {
-  ages.push(i);
-}
-
-const weight = [];
-for (let i = 50; i <= 300; i++) {
-  weight.push(i);
-}
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    height: 140,
-    width: 100
-  },
-  header: {
-    margin: theme.spacing(1),
-    textAlign: "center"
-  },
-  control: {
-    padding: theme.spacing(2)
-  },
-  button: {
-    margin: theme.spacing(1),
-    width: "100%"
-  },
-  input: {
-    display: "none"
-  },
-  formInput: {
-    margin: theme.spacing(1),
-    width: "100%",
-    height: 40,
-    borderRadius: 5,
-    padding: theme.spacing(1)
-  },
-  container: {
-    marginTop: theme.spacing(5)
-  }
-}));
-
-const Register = ({ errors, touched }) => {
+const Login = ({ errors, touched, isSubmitting }) => {
   const classes = useStyles();
   return (
     <>
       <CssBaseline />
       <Container className={classes.container} maxWidth="xs">
         <Typography variant="h6" className={classes.header}>
-          Register
+          Login
         </Typography>
 
         <Form>
           <div>
             <Field
+              autoFocus
               className={classes.formInput}
               type="text"
               name="username"
@@ -86,14 +32,16 @@ const Register = ({ errors, touched }) => {
               <p className={classes.header}>{errors.password}</p>
             )}
           </div>
-
+          {/* <button disabled={isSubmitting} type="submit">
+          Log In
+        </button> */}
           <Button
             type="submit"
             variant="contained"
             color="primary"
             className={classes.button}
           >
-            Register
+            Login
           </Button>
         </Form>
       </Container>
@@ -115,15 +63,12 @@ const FormikForm = withFormik({
       .min(6, "Password must be at least 6 characters")
       .required("Password is required")
   }),
-  handleSubmit(values, { resetForm, setErrors }) {
-    // use this if the backend api returns us with error of user already exists
+  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
     setErrors({ email: "Email is already taken" });
     resetForm();
+    setSubmitting(false);
     console.log(values);
-
     // make axios request to backend
-    // reroute to login page
+    // route to dashboard on success
   }
-})(Register);
-
-export default FormikForm;
+})(Login);

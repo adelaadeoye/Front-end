@@ -208,7 +208,6 @@ const FormikForm = withFormik({
     setErrors({ email: "Email is already taken" });
     resetForm();
     setSubmitting(false);
-    console.log(values);
     // make axios request to backend
   }
 })(Register);
