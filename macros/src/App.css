@@ -20,3 +20,201 @@
 .App-link {
   color: #09d3ac;
 }
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: space-between;
+  width: 20rem;
+  min-height: 15rem;
+  height: auto;
+  padding: 2rem;
+  margin: 2rem;
+  background-color: #FEFEFD;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgb(0, 0, 0);
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+select {
+  width: 86%;
+}
+
+table {
+  width: 100%;
+}
+
+/* Buttons */
+button {
+  z-index: 1;
+  position: relative;
+  padding: 0.5em 1em;
+  outline: none;
+  border: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button::before {
+  content: '';
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 2px solid rgba(21, 125, 123, 0.596);
+  transform-origin: center;
+  transform: scale(1);
+}
+.cancel::before{
+  border: 1px solid rgba(200, 16, 16, 0.945); ;
+}
+
+button:hover::before {
+  transition: all 0.75s ease-in-out;
+  transform-origin: center;
+  transform: scale(1.75);
+  opacity: 0;
+}
+button {
+  border: none;
+  background-color: #157D7C; 
+  color: white;
+  height: 3rem;
+  width: 11rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .3), 0 6px 20px 0 rgb(0, 0, .3);
+  position: absolute;
+  margin-top: 11.5rem;
+}
+
+button:hover {
+  background-color: #157D7C;
+  color: #C7DDCC;
+  cursor: pointer;
+}
+
+.signup-btn {
+  margin-top: 20rem;
+}
+
+.minor {
+  background-color: #157D7C; 
+  height: 2rem;
+  width: 5rem;
+  position: absolute;
+  /* margin-top: 19rem; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .3), 0 6px 20px 0 rgb(0, 0, .3);
+}
+
+/* .goal {
+  margin-top: 10.5rem;
+}
+.meal {
+  margin-top: 11.5rem;
+}
+.sub {
+  margin-top: 10rem;
+}
+.empty {
+  margin-top: 7rem;
+} */
+.cancel {
+  margin-top: -3rem;
+  margin-left: 9.5rem;
+  width: 2rem;
+  color: #FEFEFD;
+  background-color: rgba(200, 16, 16, 0.945); 
+}
+
+.cancel:hover {
+  background-color:rgba(200, 16, 16, 0.945); 
+}
+
+.switch {
+  color:#157D7C;
+}
+.switch:hover {
+  color: #C7DDCC;
+  cursor: pointer;
+}
+
+.Navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  width: 100%;
+  background-color: rgb(155, 14, 160);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .5), 0 3px 10px 0 rgb(0, 0, .5);
+}
+
+.Navbar .logo {
+  margin-left: 5rem;
+}
+span {
+  position: relative;
+  z-index: 1;
+}
+
+span::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: -0.25em;
+  right: -0.25em;
+  background-color:rgba(199, 221, 204, 0.75);
+  transform-origin: center right;
+  transform: scaleX(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+span:hover::before {
+  transform: scaleX(1);
+  transform-origin: center left;
+}
+
+
+.Navbar .links {
+  margin-right: 5rem;
+  width: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.links h3 {
+  color: #C7DDCC;
+}
+
+.links h3:hover {
+  color: #172328;
+}
+
+.navlink {
+  text-decoration: none;
+}
+.navlink:visited {
+  color: #172328;
+}
+.navlink:active {
+  color: #C7DDCC;
+}
