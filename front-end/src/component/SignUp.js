@@ -310,9 +310,10 @@ const FormikSignUp = withFormik({
   //You can use this to see the values
   handleSubmit(values) {
     axios
-      .post("https://reqres.in/api/users/", values)
+      // .post("https://reqres.in/api/users/", values)
+      .post("https://buildweek-macrocalc.herokuapp.com/createnewuser", values)
       .then(res => {
-        console.log(res.data);
+        console.log(res);
       })
       .catch(err => console.log(err.res));
   }
